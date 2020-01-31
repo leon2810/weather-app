@@ -1,0 +1,47 @@
+<div fxLayout="row">
+  <!--<mat-form-field class="example-full-width" appearance="outline" fxFlex="50" fxFlexOffset="25">
+    <input matInput placeholder="Insert City" [(ngModel)]="cityToSearch">
+  </mat-form-field>-->
+  <app-autocomplete (answerChanged)="citySelected($event)" [searchTerm]="cityToSearch" fxFlex="50" fxFlexOffset="25" class="example-full-width"></app-autocomplete>
+</div>
+
+  <div fxLayout="row" *ngIf="currentWeather | async">
+    <mat-card fxFlex="50" fxFlexOffset="25">
+      <mat-card-content fxLayout="row">
+        <div fxLayout="column">
+          <h1 fxLayout="row">{{(currentWeather | async).WeatherText}}</h1>
+          <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="space-between center">
+            <!--<ng-container *ngFor="let singleDay of forecust.DailyForecasts">
+              <mat-card fxFlex="0 1 auto">
+                <h3>{{(currentWeather | async).Date | date:"EEEE"}}</h3>
+                <div>{{singleDay.Temperature.Minimum.Value}} - {{singleDay.Temperature.Maximum.Value}}</div>
+              </mat-card>
+            </ng-container>-->
+          </div>
+          <div
+            class="weather-info animated bounceInLeft slow"
+            fxLayout="row"
+            fxLayoutAlign="space-around center"
+            fxLayout.xs="column"
+            fxLayout.sm="column"
+            *ngIf="forecust"
+          >
+            <div
+              class="weather-info__item"
+              *ngFor="let singleDay of forecust.DailyForecasts"
+              fxLayout="column"
+              fxLayoutAlign="space-around center"
+            >
+              <span>{{ singleDay.Date | date:"EEEE" }}</span>
+              <!--<span><img [src]="getImage(item.image)" alt="weather-image"/></span>-->
+              <span>{{ singleDay.Temperature.Minimum.Value | number: "1.0-0" }}°</span>
+              <span>{{ singleDay.Temperature.Maximum.Value}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="AddToFavorites()">LIKE <mat-icon aria-hidden="false" aria-label="favorite" [class.favorite-location]="isFavorite | async">favorite</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
