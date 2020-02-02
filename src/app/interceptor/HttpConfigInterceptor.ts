@@ -8,12 +8,11 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import NotificationService = require("../service/NotificationService");
-import NotificationService1 = NotificationService.NotificationService;
+import { NotificationService } from '../service/notification-service';
 
 
 export class HttpErrorInterceptor implements HttpInterceptor {
-  //constructor(private _notification: NotificationService1) {  }
+  constructor(private _notification: NotificationService) {  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -28,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // server-side error
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
           }
-         // this._notification.showError(errorMessage);
+          this._notification.showError(errorMessage);
           return throwError(errorMessage);
         })
       )

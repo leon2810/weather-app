@@ -1,49 +1,16 @@
-<!--<div class='main-nav'>
-  <div class='navbar navbar-inverse'>
-    <div class='navbar-header'>
-      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-        <span class='sr-only'>Toggle navigation</span>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-      </button>
-      <a class='navbar-brand' [routerLink]='["/"]'>MyWeatherApp</a>
-    </div>
-    <div class='clearfix'></div>
-    <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-      <ul class='nav navbar-nav'>
-        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-          <a [routerLink]='["/"]' (click)='collapse()'>
-            <span class='glyphicon glyphicon-home'></span> Home
-          </a>
-        </li>
-        <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/counter"]' (click)='collapse()'>
-            <span class='glyphicon glyphicon-education'></span> Counter
-          </a>
-        </li>
-        <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-            <span class='glyphicon glyphicon-th-list'></span> Fetch data
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>-->
-
-
   <mat-toolbar color="primary">
+    <button mat-icon-button (click)="onToggleSidenav()" fxHide fxShow.lt-sm>
+      <mat-icon>menu</mat-icon>
+    </button>
     <a [routerLink]='["/"]'>Best weather App</a>
-    
-    <!-- This fills the remaining space of the current row -->
+
     <span class="example-fill-remaining-space"></span>
-    <div fxLayout="row">
+    <div fxLayout="row" fxHide.lt-sm>
       <a [routerLink]='["/"]' fxFlex="50" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-        <span class='glyphicon glyphicon-home'></span> Home
+         Home
       </a>
       <a [routerLink]='["/favorites"]' fxFlex="50" [routerLinkActive]='["link-active"]'>
-        <span class='glyphicon glyphicon-th-list'></span> Favorites
+        Favorites
       </a>
     </div>
 

@@ -15,7 +15,9 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
 import { SharedModule } from './shared.module';
 import { currentWeatherReducer, favoritesReducer, currentLocationReducer} from './reducers/weather.reducer';
 import { HttpErrorInterceptor } from './interceptor/HttpConfigInterceptor';
-import { NotificationService } from './service/NotificationService';
+import { NotificationService } from './service/notification-service';
+import { MatSnackBar } from '@angular/material';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import { NotificationService } from './service/NotificationService';
     HomeComponent,
     FavoritesComponent,
     NotFoundComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    SideNavComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,7 +47,7 @@ import { NotificationService } from './service/NotificationService';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }, NotificationService
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, deps: [NotificationService, MatSnackBar]}
     ],
   bootstrap: [AppComponent]
 })

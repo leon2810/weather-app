@@ -20,7 +20,7 @@ export class WeatherService {
   }
 
   getLocations(query: string) {
-    return of([{ "Version": 1, "Key": "215854", "Type": "City", "Rank": 31, "LocalizedName": "Tel Aviv", "Country": { "ID": "IL", "LocalizedName": "Israel" }, "AdministrativeArea": { "ID": "TA", "LocalizedName": "Tel Aviv" } }, { "Version": 1, "Key": "3431644", "Type": "City", "Rank": 45, "LocalizedName": "Telanaipura", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JA", "LocalizedName": "Jambi" } }, { "Version": 1, "Key": "300558", "Type": "City", "Rank": 45, "LocalizedName": "Telok Blangah New Town", "Country": { "ID": "SG", "LocalizedName": "Singapore" }, "AdministrativeArea": { "ID": "05", "LocalizedName": "South West" } }, { "Version": 1, "Key": "325876", "Type": "City", "Rank": 51, "LocalizedName": "Telford", "Country": { "ID": "GB", "LocalizedName": "United Kingdom" }, "AdministrativeArea": { "ID": "TFW", "LocalizedName": "Telford and Wrekin" } }, { "Version": 1, "Key": "169072", "Type": "City", "Rank": 51, "LocalizedName": "Telavi", "Country": { "ID": "GE", "LocalizedName": "Georgia" }, "AdministrativeArea": { "ID": "KA", "LocalizedName": "Kakheti" } }, { "Version": 1, "Key": "230611", "Type": "City", "Rank": 51, "LocalizedName": "Telsiai", "Country": { "ID": "LT", "LocalizedName": "Lithuania" }, "AdministrativeArea": { "ID": "TE", "LocalizedName": "Telšiai" } }, { "Version": 1, "Key": "2723742", "Type": "City", "Rank": 55, "LocalizedName": "Telégrafo", "Country": { "ID": "BR", "LocalizedName": "Brazil" }, "AdministrativeArea": { "ID": "PA", "LocalizedName": "Pará" } }, { "Version": 1, "Key": "186933", "Type": "City", "Rank": 55, "LocalizedName": "Tela", "Country": { "ID": "HN", "LocalizedName": "Honduras" }, "AdministrativeArea": { "ID": "AT", "LocalizedName": "Atlántida" } }, { "Version": 1, "Key": "3453754", "Type": "City", "Rank": 55, "LocalizedName": "Telaga Asih", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JB", "LocalizedName": "West Java" } }, { "Version": 1, "Key": "3453755", "Type": "City", "Rank": 55, "LocalizedName": "Telagamurni", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JB", "LocalizedName": "West Java" } }]);
+    //return of([{ "Version": 1, "Key": "215854", "Type": "City", "Rank": 31, "LocalizedName": "Tel Aviv", "Country": { "ID": "IL", "LocalizedName": "Israel" }, "AdministrativeArea": { "ID": "TA", "LocalizedName": "Tel Aviv" } }, { "Version": 1, "Key": "3431644", "Type": "City", "Rank": 45, "LocalizedName": "Telanaipura", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JA", "LocalizedName": "Jambi" } }, { "Version": 1, "Key": "300558", "Type": "City", "Rank": 45, "LocalizedName": "Telok Blangah New Town", "Country": { "ID": "SG", "LocalizedName": "Singapore" }, "AdministrativeArea": { "ID": "05", "LocalizedName": "South West" } }, { "Version": 1, "Key": "325876", "Type": "City", "Rank": 51, "LocalizedName": "Telford", "Country": { "ID": "GB", "LocalizedName": "United Kingdom" }, "AdministrativeArea": { "ID": "TFW", "LocalizedName": "Telford and Wrekin" } }, { "Version": 1, "Key": "169072", "Type": "City", "Rank": 51, "LocalizedName": "Telavi", "Country": { "ID": "GE", "LocalizedName": "Georgia" }, "AdministrativeArea": { "ID": "KA", "LocalizedName": "Kakheti" } }, { "Version": 1, "Key": "230611", "Type": "City", "Rank": 51, "LocalizedName": "Telsiai", "Country": { "ID": "LT", "LocalizedName": "Lithuania" }, "AdministrativeArea": { "ID": "TE", "LocalizedName": "Telšiai" } }, { "Version": 1, "Key": "2723742", "Type": "City", "Rank": 55, "LocalizedName": "Telégrafo", "Country": { "ID": "BR", "LocalizedName": "Brazil" }, "AdministrativeArea": { "ID": "PA", "LocalizedName": "Pará" } }, { "Version": 1, "Key": "186933", "Type": "City", "Rank": 55, "LocalizedName": "Tela", "Country": { "ID": "HN", "LocalizedName": "Honduras" }, "AdministrativeArea": { "ID": "AT", "LocalizedName": "Atlántida" } }, { "Version": 1, "Key": "3453754", "Type": "City", "Rank": 55, "LocalizedName": "Telaga Asih", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JB", "LocalizedName": "West Java" } }, { "Version": 1, "Key": "3453755", "Type": "City", "Rank": 55, "LocalizedName": "Telagamurni", "Country": { "ID": "ID", "LocalizedName": "Indonesia" }, "AdministrativeArea": { "ID": "JB", "LocalizedName": "West Java" } }]);
     const uri = environment.apiAutoComplete;
     let params = new HttpParams();
     params = params.append('q', query);
@@ -34,6 +34,7 @@ export class WeatherService {
   }
 
   getCurrentCity() {
+
     return of({ "Version": 1, "Key": "215854", "Type": "City", "Rank": 31, "LocalizedName": "Tel Aviv", "EnglishName": "Tel Aviv", "PrimaryPostalCode": "", "Region": { "ID": "MEA", "LocalizedName": "Middle East", "EnglishName": "Middle East" }, "Country": { "ID": "IL", "LocalizedName": "Israel", "EnglishName": "Israel" }, "AdministrativeArea": { "ID": "TA", "LocalizedName": "Tel Aviv", "EnglishName": "Tel Aviv", "Level": 1, "LocalizedType": "District", "EnglishType": "District", "CountryID": "IL" }, "TimeZone": { "Code": "IST", "Name": "Asia/Jerusalem", "GmtOffset": 2.0, "IsDaylightSaving": false, "NextOffsetChange": "2020-03-27T00:00:00Z" }, "GeoPosition": { "Latitude": 32.045, "Longitude": 34.77, "Elevation": { "Metric": { "Value": 34.0, "Unit": "m", "UnitType": 5 }, "Imperial": { "Value": 111.0, "Unit": "ft", "UnitType": 0 } } }, "IsAlias": false, "SupplementalAdminAreas": [], "DataSets": ["AirQualityCurrentConditions", "AirQualityForecasts", "Alerts"] })
     const uri = environment.currentCityUrl;
     return this.geoservice.getCurrentPosition().pipe(switchMap(pos => {
@@ -49,6 +50,13 @@ export class WeatherService {
   private getData(url: string, params: HttpParams) {
     params = params.append('apikey', environment.apiKey);
     return this.http.get<any>(url, { params });
+  }
+
+  imageUrl(iconNumber) {
+    if (+iconNumber >= 1 && +iconNumber < 10) {
+      iconNumber = "0" + iconNumber;
+    }
+    return `${environment.apiImage}/${iconNumber}-s.png`;
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  @Output() public sidenavToggle = new EventEmitter();
 
-  collapse() {
-    this.isExpanded = false;
+  constructor() { }
+
+  ngOnInit() {
   }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  public onToggleSidenav = () => {
+    this.sidenavToggle.emit();
   }
 }

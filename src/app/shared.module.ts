@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from "./material.module";
+import { MatGridListModule, MatSidenavModule } from "@angular/material";
 
 
 @NgModule({
@@ -15,6 +16,8 @@ import { MaterialModule } from "./material.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatGridListModule,
+    MatSidenavModule
   ],
   exports: [
     FlexLayoutModule,
@@ -22,7 +25,9 @@ import { MaterialModule } from "./material.module";
     MaterialModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatGridListModule,
+    MatSidenavModule
   ],
   entryComponents: [
   ],
