@@ -9,14 +9,16 @@ import {
   on,
   props
 } from '@ngrx/store';
-import { Favorite, Tempereture } from '../state/weather.model';
+import { Favorite, Tempereture, Weather } from '../state/weather.model';
 import { SetcurrentWeather, GetcurrentWeather, AddtWeatherToFavorites, RemoveWeatherFromFavorites, GetCurrentLocation, SetcurrentLocation, GetTempType, SetTempType
 } from '../state/weather.actions';
+import { debug } from 'util';
 
 
 const favoritesInitialState = new Array<Favorite>();
-
+const initialWeather = new Weather(0)
 const initialTempType = Tempereture.Celceuse
+const initialLocation: { key: number, name?: string } = {key:0,name:""}
 
 const _tempTypeReducer = createReducer(initialTempType,
   on(SetTempType, (state, props) => {
@@ -32,7 +34,7 @@ export function tempTypeReducer(state, action) {
   return _tempTypeReducer(state, action);
 }
 
-const _currentWeatherReducer = createReducer(null,
+const _currentWeatherReducer = createReducer(initialWeather,
   on(GetcurrentWeather, state => state),
   on(SetcurrentWeather, (state, props) => {
     state = Object.assign({}, props.weather);
@@ -40,7 +42,7 @@ const _currentWeatherReducer = createReducer(null,
   })
 );
 
-const _currentLocationReducer = createReducer(null,
+const _currentLocationReducer = createReducer(initialLocation,
   on(GetCurrentLocation, state => state),
   on(SetcurrentLocation, (state, props) => {
     state = Object.assign({}, props);

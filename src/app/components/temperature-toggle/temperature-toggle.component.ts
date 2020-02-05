@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppState } from '../../app.state';
 import { Store } from '@ngrx/store';
 import { Observable, iif, of, Subscription } from 'rxjs';
-import { flatMap, switchMap, map, mergeMap, tap, take } from 'rxjs/operators';
+import { flatMap, switchMap, map, mergeMap, tap, take, takeLast } from 'rxjs/operators';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Tempereture } from '../../state/weather.model';
 import { SetTempType } from '../../state/weather.actions';
+import { debug } from 'util';
+
 
 @Component({
   selector: 'app-temperature-toggle',
@@ -43,12 +45,12 @@ export class TemperatureToggleComponent implements OnInit, OnDestroy {
   }
 
   tempChanged(event) {
-    //this.subsribtion =
     this.temperature$ = this.temperature$.pipe(take(1), tap(x => {
       x == Tempereture.Celceuse ?
         this.store.dispatch(SetTempType({ key: Tempereture.Fur })) :
         this.store.dispatch(SetTempType({ key: Tempereture.Celceuse }))
     }))
+
     this.currentState = 'final';
     this.triggerAnimation();
   }

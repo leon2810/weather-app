@@ -29,7 +29,6 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     this.isFavorite$ = combineLatest(this.favorites$, this.currentLocation$).pipe(flatMap(res => {
       return of(res[0].filter((x) => x.key == res[1].key).length > 0)
     }))
-    this.currentWeather$.subscribe(x=> console.log(x))
   }
 
   AddToFavorites() {

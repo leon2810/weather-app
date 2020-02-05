@@ -4,6 +4,7 @@
 <div *ngIf="isLoading" fxLayout="row" fxLayoutAlign="center center">
   <mat-spinner></mat-spinner>
 </div>
+<div fxLayout="row" fxLayoutAlign="center center" *ngIf="!isLoading && (currentWeather$ | async) == null">ServerError</div>
 
 <div fxLayout="row" *ngIf="currentWeather$ | async">
   <mat-card fxFlex="50" fxFlexOffset="25">

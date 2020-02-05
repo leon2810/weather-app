@@ -15,7 +15,6 @@ export class GeolocationService {
   getCurrentPosition$ = new Observable(observer => {
      navigator.geolocation.getCurrentPosition(
        position => {
-         
          observer.next(position);
          observer.complete();
        },
@@ -26,3 +25,4 @@ export class GeolocationService {
     });
 
 }
+

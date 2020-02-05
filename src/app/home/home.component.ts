@@ -5,9 +5,10 @@ import { SetcurrentWeather, AddtWeatherToFavorites, SetcurrentLocation, RemoveWe
 import { Weather, Favorite } from '../state/weather.model';
 import { WeatherService } from '../service/weather-service.service';
 import { AppState } from '../app.state';
-import { flatMap, take, delay } from 'rxjs/operators';
+import { flatMap, take, delay, switchMap, tap, map, catchError } from 'rxjs/operators';
 import { ImageService } from '../service/image-service';
 import { debug } from 'util';
+import { NotificationService } from '../service/notification-service';
 
 @Component({
   selector: 'app-home',
@@ -26,35 +27,38 @@ export class HomeComponent implements OnInit, OnDestroy  {
   subscriptions: Array<Subscription> = new Array<Subscription>();
 
   ngOnInit(): void {
-    this.currentLocation$.subscribe(location => {
+    this.currentWeather$= this.currentLocation$.pipe(switchMap(location => {
       if (location && location.key) {
         this.cityToSearch = location.name;
-        this._weatherService.getCurrentWeather(location.key).subscribe(
-          current => { this.isLoading = false; this.store.dispatch(SetcurrentWeather({ weather: current })) })
-      
+        return this._weatherService.getCurrentWeather(location.key).pipe(tap(
+          current => { this.isLoading = false; this.store.dispatch(SetcurrentWeather({ weather: current })) }))
+
       }
       else {
-        this.subscriptions.push(this._weatherService.getCurrentCity().subscribe(city => {
-          this.cityToSearch = city.EnglishName;
-          this.subscriptions.push(this._weatherService.getLocations(this.cityToSearch).subscribe(data => {
-            const thisLocation = data[0];
-            this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: thisLocation.Key, name: thisLocation.LocalizedName })));
-          }))
-        }, err => {
+        return this._weatherService.getCurrentCity().pipe(tap(city => {
+          this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: city.Key, name: city.LocalizedName })));
+        }), catchError(err => {
             if (err instanceof GeolocationPositionError) {
-            this.subscriptions.push(this._weatherService.getLocations(this.cityToSearch).subscribe(data => {
-              this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: data[0].Key, name: data[0].EnglishName })));
+            return this._weatherService.getLocations(this.cityToSearch).pipe(tap(data => {
+              this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: data[0].Key, name: data[0].EnglishName })))
+            }), catchError(secError => {
+              this.isLoading = false;
+              return of(null)
             }))
           }
-        }
-        ));
+          this.isLoading = false;
+          return of(null)
+        }))
       }
-    })
+    }))
   }
 
 
 
-  constructor(private _weatherService: WeatherService, private store: Store<AppState>, private imageService: ImageService) {
+  constructor(private _weatherService: WeatherService,
+    private store: Store<AppState>,
+    private imageService: ImageService,
+    private notificationService: NotificationService) {
     this.currentLocation$ = store.select("currentLocation")
     this.currentWeather$ = store.select("currentWeather");
     this.favorites$ = store.select("favorites");
