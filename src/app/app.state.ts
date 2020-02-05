@@ -6,13 +6,14 @@ import {
   MetaReducer,
   Action
 } from '@ngrx/store';
-import { Weather, Favorite } from './state/weather.model';
+import { Weather, Favorite, Tempereture } from './state/weather.model';
 
 
 
 export interface AppState {
   readonly currentWeather: Weather
   readonly favorites: Array<Favorite>
-  readonly currentLocation: Favorite
+  readonly currentLocation: Favorite,
+  readonly tempType: Tempereture
 }
 

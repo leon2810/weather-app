@@ -1,37 +1,15 @@
 <div fxLayout="row">
   <app-autocomplete (answerChanged)="citySelected($event)" [searchTerm]="cityToSearch" fxFlex="50" fxFlexOffset="25" class="example-full-width"></app-autocomplete>
 </div>
+<div *ngIf="isLoading" fxLayout="row" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div>
 
-<div fxLayout="row" *ngIf="currentWeather | async">
+<div fxLayout="row" *ngIf="currentWeather$ | async">
   <mat-card fxFlex="50" fxFlexOffset="25">
     <mat-card-content>
-      <div fxLayout="row" fxLayoutAlign="space-between flex-start">
-        <mat-grid-list cols="2" rowHeight="4:1" [style.width]="'11em'">
-          <mat-grid-tile [rowspan]="2">
-            <img [src]="getImage((currentWeather | async).WeatherIcon)" />
-          </mat-grid-tile>
-          <mat-grid-tile><h3>{{cityToSearch}}</h3></mat-grid-tile>
-          <mat-grid-tile [rowspan]="1">
-            <h5>{{(currentWeather |async).Temperature.Metric.Value}}°</h5>
-          </mat-grid-tile>
-        </mat-grid-list>
-        <button mat-button (click)="AddToFavorites()">
-          <mat-icon aria-hidden="false" aria-label="favorite" [class.favorite-location]="isFavorite | async">favorite</mat-icon>
-        </button>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="center start">
-        <h1 fxLayoutAlign="center start">{{(currentWeather | async).WeatherText}}</h1>
-      </div>
-      <div class="forecust">
-        <div *ngFor="let singleDay of forecust.DailyForecasts" fxLayout="column" class="forcust-item">
-          <span fxLayoutAlign ="center">{{ singleDay.Date | date:"EEEE" }}</span>
-          <span fxLayoutAlign ="center"><img [src]="getImgByTime(singleDay)" alt="weather-image" /></span>
-          <div fxLayout="row" class="forcust-item__temperature">
-            <span class="forcust-item__temperature forcust-item__temperature--low">{{ singleDay.Temperature.Minimum.Value | number: "1.0-0" }}°</span>
-            <span class="forcust-item__temperature ">{{ singleDay.Temperature.Maximum.Value| number: "1.0-0" }}°</span>
-          </div>
-        </div>
-      </div>
+      <app-current-weather></app-current-weather>
+      <app-forecust></app-forecust>
     </mat-card-content>
   </mat-card>
 </div>

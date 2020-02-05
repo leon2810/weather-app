@@ -20,7 +20,7 @@ export class GeolocationService {
          observer.complete();
        },
        err => {
-         observer.error.bind(observer);
+         observer.error(err);
        }
      );
     });
