@@ -8,55 +8,43 @@ import { SetcurrentLocation } from '../state/weather.actions';
 import { Router } from '@angular/router';
 import { WeatherService } from '../service/weather-service.service';
 import { environment } from '../../environments/environment'
+import { ImageService } from '../service/image-service';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss']
 })
-export class FavoritesComponent implements OnInit, OnDestroy  {
+export class FavoritesComponent implements OnInit  {
 
   favorites$: Observable<Array<Favorite>>;
-  favoritesWeather$: Observable<Array<{ Favorite,any}>>;
+  favoritesWeather$: Observable<any>;
   favorites: any[] =[];
 
-  constructor(private store: Store<AppState>, private router: Router, private weatherService: WeatherService) { }
+  constructor(private store: Store<AppState>, private router: Router, private imageService: ImageService, private weatherService: WeatherService) { }
 
   ngOnInit() {
     this.favorites$ = this.store.pipe(select("favorites"))
 
-    this.favorites$.subscribe(favorites => {
-      let arrayOfWEathers = [];
-      let arrayOfData = [];
-      favorites.forEach(fav => {
-        arrayOfWEathers.push(this.weatherService.getCurrentWeather(fav.key))
+    this.favoritesWeather$ = this.favorites$.pipe(
+      switchMap((locationList) => {
+        const weatherLocationZip$List = locationList.map((location) => {
+          return this.weatherService.getCurrentWeather(location.key).pipe(
+            map((weather) => ({ weather, location }))
+          );
+        })
+        return forkJoin(weatherLocationZip$List);
       })
-      forkJoin(arrayOfWEathers).subscribe(res => {
-        favorites.forEach((val, index) => arrayOfData.push({ key: val.key, name: val.name, weather: res[0][index] }))
-        this.favorites = arrayOfData;
-      })
-
-    })
-    //this.favoritesWeather$ = this.favorites$.pipe(mergeMap(x => x)).
-    //  pipe(mergeMap(x => forkJoin(this.weatherService.getCurrentWeather(x.key)).pipe(map(y => ({ x, y })))))
-
-  //  this.favoritesWeather$ = this.favorites$.pipe(mergeMap(x => x)).
-  //    pipe(mergeMap(x => forkJoin(this.weatherService.getCurrentWeather(x.key)).pipe(mergeMap(x => x), map(y => ({ x, y }))))).pipe(flatMap(res => from(res)))
-    //
+    )
   }
 
   setCurrentLocation(fav: any) {
-    debugger;
     this.store.dispatch(SetcurrentLocation({ key: fav.key, name: fav.name }));
     this.router.navigate(['/']);
   }
 
   getImage(img: string) {
-    return this.weatherService.imageUrl(img);
+    return this.imageService.imageUrl(img);
   }
-
-  ngOnDestroy() {
-
-  }
-
 }

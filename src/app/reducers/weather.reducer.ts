@@ -9,22 +9,33 @@ import {
   on,
   props
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
-import { Weather, Favorite } from '../state/weather.model';
-import {
-  GET_CURRENT,
-  SET_WEATHER,
- ADD_FAVORITE, REMOVE_FAVORITE, SetcurrentWeather, GetcurrentWeather, AddtWeatherToFavorites, RemoveWeatherFromFavorites, GetCurrentLocation, SetcurrentLocation
+import { Favorite, Tempereture } from '../state/weather.model';
+import { SetcurrentWeather, GetcurrentWeather, AddtWeatherToFavorites, RemoveWeatherFromFavorites, GetCurrentLocation, SetcurrentLocation, GetTempType, SetTempType
 } from '../state/weather.actions';
-import { debug } from 'util';
 
 
-export const favoritesInitialState = new Array<Favorite>();
+const favoritesInitialState = new Array<Favorite>();
+
+const initialTempType = Tempereture.Celceuse
+
+const _tempTypeReducer = createReducer(initialTempType,
+  on(SetTempType, (state, props) => {
+    state = props.key;
+    return state;
+  }),
+  on(GetTempType, (state, props) => {
+    return state;
+  })
+);
+
+export function tempTypeReducer(state, action) {
+  return _tempTypeReducer(state, action);
+}
 
 const _currentWeatherReducer = createReducer(null,
   on(GetcurrentWeather, state => state),
   on(SetcurrentWeather, (state, props) => {
-    state = Object.assign({}, props);
+    state = Object.assign({}, props.weather);
     return state;
   })
 );

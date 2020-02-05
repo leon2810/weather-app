@@ -13,11 +13,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { SharedModule } from './shared.module';
-import { currentWeatherReducer, favoritesReducer, currentLocationReducer} from './reducers/weather.reducer';
+import { currentWeatherReducer, favoritesReducer, currentLocationReducer, tempTypeReducer} from './reducers/weather.reducer';
 import { HttpErrorInterceptor } from './interceptor/HttpConfigInterceptor';
 import { NotificationService } from './service/notification-service';
 import { MatSnackBar } from '@angular/material';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { CurrentWeatherComponent } from './home/current-weather/current-weather.component';
+import { ForecustComponent } from './home/forecust/forecust.component';
+import { TemperatureToggleComponent } from './components/temperature-toggle/temperature-toggle.component';
+import { TempereturePipe } from './pipe/temperaturePipe';
 
 
 @NgModule({
@@ -28,7 +32,11 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     FavoritesComponent,
     NotFoundComponent,
     AutocompleteComponent,
-    SideNavComponent
+    SideNavComponent,
+    TempereturePipe,
+    CurrentWeatherComponent,
+    ForecustComponent,
+    TemperatureToggleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,7 +51,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     StoreModule.forRoot({
       currentWeather: currentWeatherReducer,
       favorites: favoritesReducer,
-      currentLocation: currentLocationReducer
+      currentLocation: currentLocationReducer,
+      tempType: tempTypeReducer
     })
   ],
   providers: [

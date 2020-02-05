@@ -16,19 +16,6 @@ export class AutocompleteComponent implements OnInit {
   lookupCtrl = new FormControl();
   filteredItems: any;
   isLoading = false;
-  _searchTerm: any;
-  private _query: BehaviorSubject<any> = new BehaviorSubject(null);
-
-
-  @ViewChild(MatAutocomplete, {
-    read: MatAutocomplete, static: true
-  }) matAutocomplete: MatAutocomplete;
-
-  @ViewChild(MatAutocompleteTrigger, {
-    read: MatAutocompleteTrigger, static: true
-  }) matAutocompleteTrigger: MatAutocompleteTrigger;
-
-
 
   constructor(private weatherService: WeatherService, private notificationService: NotificationService) { }
 
@@ -37,9 +24,6 @@ export class AutocompleteComponent implements OnInit {
 
   @Output()
   answerChanged = new EventEmitter<any>();
-
-  @Input()
-  placeHolder: string;
 
 
   optionSelectionChange(option: any, event: MatOptionSelectionChange) {
@@ -53,7 +37,6 @@ export class AutocompleteComponent implements OnInit {
 
   handleEmptyInput(event: any) {
     if (event.target.value === '') {
-      this._searchTerm = null;
     }
     return true;
   }
@@ -63,45 +46,38 @@ export class AutocompleteComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-    this._searchTerm = this.searchTerm;    
+  ngOnInit() { 
 
-    this._query.pipe(
+    this.lookupCtrl.valueChanges.pipe(
       debounceTime(1000),
       tap(() => {
         this.filteredItems = [];
       }),
       switchMap(value => {
-        if (value == null || value == "") {
+        if (value == null || value === "" || typeof value === 'object') {
           return of(null);
         }
-        if (new RegExp('^[a-zA-Z]$').test(value)) {
+        if (new RegExp('^[A-Za-z ]+$').test(value)) {
           this.isLoading = true;
-          return this.weatherService.getLocations(this._searchTerm).pipe(
-              finalize(() => {
-                this.isLoading = false;
-              }));
+          return this.weatherService.getLocations(value).pipe(
+            catchError(x => {
+              this.notificationService.showError("error in search")
+              return of([]) }),
+            finalize(() => {
+              this.isLoading = false;
+            }));
         }
         else {
-          return throwError("search only in english");
+          this.notificationService.showError("Search only english latters")
+          return of([])
         }
       }))
       .subscribe(data => {
-        if (data != null) {
-          this.filteredItems = data;
-        }
-      }, err => { debugger; this.notificationService.showError(err); });
+        this.filteredItems = data;
+      }, err => {
+          debugger;
+      });
 
-
-    this.lookupCtrl.valueChanges.subscribe(data => {
-      this._searchTerm = data;
-      if (data == null || data === "" || typeof data === 'object') {
-        return;
-      }
-
-      this._query.next(data);
-    });
-
-    this.lookupCtrl.setValue({ key: "", name: this._searchTerm });
+    this.lookupCtrl.setValue({ key: "", name: this.searchTerm });
   }
 }
