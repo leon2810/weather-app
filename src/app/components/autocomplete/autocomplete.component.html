@@ -1,6 +1,5 @@
-<mat-form-field appearance="outline" fxLayout="column" [ngClass]="readOnly ? 'readOnly' : ''">
-  <mat-label>{{placeHolder}}</mat-label>
-  <input type="text" [matTooltip]="placeHolder" matInput [matAutocomplete]="auto"
+<mat-form-field appearance="outline" fxLayout="column">
+  <input type="text"  matInput [matAutocomplete]="auto"
          [formControl]="lookupCtrl"
          (change)="handleEmptyInput($event)">
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

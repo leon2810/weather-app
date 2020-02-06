@@ -10,5 +10,5 @@ export const environment = {
   apiKey: "szqJWNZdd1Wi6XSZZ5GRLqiDZGIwhe4A",
   apiImage: "http://developer.accuweather.com/sites/default/files",
   apiAutoComplete: "http://dataservice.accuweather.com/locations/v1/cities/autocomplete",
-  currentCityUrl: "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search" //?q=32.0853,34.7818
+  currentCityUrl: "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
 };

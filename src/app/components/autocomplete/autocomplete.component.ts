@@ -3,9 +3,8 @@ import { BehaviorSubject, of, throwError } from 'rxjs';
 import { debounceTime, tap, switchMap, finalize, catchError } from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOptionSelectionChange } from '@angular/material';
 import { FormControl, FormGroup } from '@angular/forms';
-import Weatherserviceservice = require("../../service/weather-service.service");
-import WeatherService = Weatherserviceservice.WeatherService;
 import { NotificationService } from '../../service/notification-service';
+import { WeatherService } from '../../service/weather-service.service';
 
 @Component({
   selector: 'app-autocomplete',
