@@ -31,22 +31,26 @@ export class HomeComponent implements OnInit, OnDestroy  {
       if (location && location.key) {
         this.cityToSearch = location.name;
         return this._weatherService.getCurrentWeather(location.key).pipe(tap(
-          current => { this.isLoading = false; this.store.dispatch(SetcurrentWeather({ weather: current })) }))
-
+          current => {
+            this.updateLoadingStatus(false);
+            this.store.dispatch(SetcurrentWeather({ weather: current }))
+          }))
       }
       else {
         return this._weatherService.getCurrentCity().pipe(tap(city => {
           this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: city.Key, name: city.LocalizedName })));
         }), catchError(err => {
-          if (true) {
+          //@ts-ignore-start
+          if (err instanceof GeolocationPositionError) {
+          //@ts-ignore-end
             return this._weatherService.getLocations(this.cityToSearch).pipe(tap(data => {
               this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: data[0].Key, name: data[0].EnglishName })))
             }), catchError(secError => {
-              this.isLoading = false;
+              this.updateLoadingStatus(false);
               return of(null)
             }))
           }
-          this.isLoading = false;
+          this.updateLoadingStatus( false);
           return of(null)
         }))
       }
@@ -69,6 +73,12 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   citySelected(data) {
     this.store.dispatch(SetcurrentLocation({ key: data.Key, name: data.LocalizedName }))
+  }
+
+  updateLoadingStatus(status) {
+    setTimeout(() => {
+      this.isLoading = status;
+    });
   }
 
   AddToFavorites() {

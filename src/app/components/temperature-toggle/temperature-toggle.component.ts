@@ -1,12 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { AppState } from '../../app.state';
 import { Store } from '@ngrx/store';
-import { Observable, iif, of, Subscription } from 'rxjs';
-import { flatMap, switchMap, map, mergeMap, tap, take, takeLast } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Tempereture } from '../../state/weather.model';
 import { SetTempType } from '../../state/weather.actions';
-import { debug } from 'util';
 
 
 @Component({
@@ -30,26 +28,31 @@ import { debug } from 'util';
     ]),
   ]
 })
-export class TemperatureToggleComponent implements OnInit, OnDestroy {
+export class TemperatureToggleComponent implements OnInit, OnDestroy  {
 
   temperature$: Observable<Tempereture>
   Tempereture = Tempereture;
   subsribtion: Subscription
   currentState: string = "final";
+    tempType: Tempereture;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.temperature$ = this.store.select("tempType");
+    this.subsribtion = this.temperature$.subscribe(x => {
+      this.tempType = x
+    })
     this.triggerAnimation()
   }
 
   tempChanged(event) {
-    this.temperature$ = this.temperature$.pipe(take(1), tap(x => {
-      x == Tempereture.Celceuse ?
-        this.store.dispatch(SetTempType({ key: Tempereture.Fur })) :
-        this.store.dispatch(SetTempType({ key: Tempereture.Celceuse }))
-    }))
+    if (this.tempType ==1) {
+      this.store.dispatch(SetTempType({ key: Tempereture.Fur }))
+    }
+    else {
+      this.store.dispatch(SetTempType({ key: Tempereture.Celceuse }))
+    }
 
     this.currentState = 'final';
     this.triggerAnimation();

@@ -15,17 +15,6 @@ export class NavMenuComponent {
 
   constructor(private overlayContainer: OverlayContainer, private themeService: ThemeService) {
     this.theme$ = this.themeService.getTheme()
-    //  .pipe(take(1), tap((themeNum) => {
-    //  debugger;
-    //  if (themeNum == 1) {
-    //    this.overlayContainer.getContainerElement().classList.add('dark-theme-nav');
-    //    this.overlayContainer.getContainerElement().classList.remove('regular-theme-nav');
-    //  }
-    //  else {
-    //    this.overlayContainer.getContainerElement().classList.remove('dark-theme-nav');
-    //    this.overlayContainer.getContainerElement().classList.add('regular-theme-nav');
-    //  }
-    //}))
   }
 
   public onToggleSidenav = () => {

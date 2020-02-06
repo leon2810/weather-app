@@ -1,51 +1,23 @@
 @import '~@angular/material/theming';
 
-@import 'app/nav-menu/nav-menu.component.scss';
+@import 'src/shared/variables.scss';
+@import 'app/nav-menu/nav-menu.component.scss-theme.scss';
 
 @include mat-core();
 
-
-$candy-app-primary: mat-palette($mat-indigo);
-$candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
-$candy-app-warn: mat-palette($mat-red);
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
-@include angular-material-theme($candy-app-theme);
-
-
-$dark-primary: mat-palette($mat-blue-grey);
-$dark-accent: mat-palette($mat-amber, A200, A100, A400);
-$dark-warn: mat-palette($mat-deep-orange);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-
-@mixin nav-menu-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-
-
-  .nav-menu-theme {
-    background-color: mat-color($primary);
-    border-color: mat-color($accent, A400);
-  }
-}
-
 .dark-theme {
   @include angular-material-theme($dark-theme);
-  
 }
 
-.dark-theme-nav {
-  @include nav-menu-theme($dark-theme);
-  @include _mat-toolbar-color($dark-primary);
-}
 
 .regular-theme {
   @include angular-material-theme($candy-app-theme);
 }
 
-.regular-theme-nav {
-  @include nav-menu-theme($candy-app-theme);
-  @include _mat-toolbar-color($candy-app-primary);
-}
+@include nav-menu($dark-theme);
+@include nav-menu($candy-app-theme);
+
+
 
 
 
