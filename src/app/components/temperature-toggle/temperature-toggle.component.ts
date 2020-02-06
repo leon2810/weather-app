@@ -14,10 +14,10 @@ import { SetTempType } from '../../state/weather.actions';
   animations: [
     trigger('zoomIn', [
       state('initial', style({
-        transform: 'scale(1)'
+        transform: 'scale(1) rotateY(360deg)',
       })),
       state('final', style({
-        transform: 'scale(1.5)'
+        transform: 'scale(1.5) rotateY(0deg)'
       })),
       state('void', style({
         transform: 'scale(1)'
