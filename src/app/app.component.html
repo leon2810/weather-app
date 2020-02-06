@@ -1,2 +1,2 @@
 <app-nav-menu (sidenavToggle)="sidenav.toggle()"></app-nav-menu>
-<app-side-nav #sidenav></app-side-nav>
+<app-side-nav #sidenav [ngClass]="(theme$ | async) == 1 ? 'dark-theme' : 'regular-theme'"></app-side-nav>

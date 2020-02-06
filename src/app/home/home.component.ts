@@ -5,7 +5,7 @@ import { SetcurrentWeather, AddtWeatherToFavorites, SetcurrentLocation, RemoveWe
 import { Weather, Favorite } from '../state/weather.model';
 import { WeatherService } from '../service/weather-service.service';
 import { AppState } from '../app.state';
-import { flatMap, take, delay, switchMap, tap, map, catchError } from 'rxjs/operators';
+import { flatMap, take, switchMap, tap, catchError } from 'rxjs/operators';
 import { ImageService } from '../service/image-service';
 import { debug } from 'util';
 import { NotificationService } from '../service/notification-service';
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
         return this._weatherService.getCurrentCity().pipe(tap(city => {
           this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: city.Key, name: city.LocalizedName })));
         }), catchError(err => {
-            if (err instanceof GeolocationPositionError) {
+          if (true) {
             return this._weatherService.getLocations(this.cityToSearch).pipe(tap(data => {
               this.store.dispatch(SetcurrentLocation(Object.assign({}, { key: data[0].Key, name: data[0].EnglishName })))
             }), catchError(secError => {

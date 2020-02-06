@@ -1,10 +1,11 @@
-  <mat-toolbar color="primary">
+  <mat-toolbar [ngClass]="(theme$ | async) == 1 ? 'dark-theme-nav nav-menu' : 'regular-theme-nav nav-menu'">
     <button mat-icon-button (click)="onToggleSidenav()" fxHide fxShow.lt-sm>
       <mat-icon>menu</mat-icon>
     </button>
     <a [routerLink]='["/"]'>Best weather App</a>
 
     <span class="example-fill-remaining-space"></span>
+    <app-theme-changer></app-theme-changer>
     <app-temperature-toggle></app-temperature-toggle>
     <div fxLayout="row" fxHide.lt-sm>
       <a [routerLink]='["/"]' fxFlex="50" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>

@@ -1,3 +1,23 @@
+@import '~@angular/material/theming';
+
+
+@mixin nav-menu($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  // all of these variables contain many additional variables
+  nav-menu {
+    // retrieve particular color from variable, rg: text, base, divider, ...
+    color: mat-color($foreground, text);
+    background-color: mat-color($background, card);
+    // or use "default" subvariable by default, oh the puns :)
+    border: 1px solid mat-color($accent);
+  }
+}
+
 .example-fill-remaining-space {
   /* This fills the remaining space, by using flexbox. 
      Every toolbar row uses a flexbox row layout. */
@@ -68,3 +88,5 @@ a.link-active{
         text-overflow: ellipsis;
     }
 }
+
+

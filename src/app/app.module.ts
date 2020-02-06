@@ -22,6 +22,7 @@ import { CurrentWeatherComponent } from './home/current-weather/current-weather.
 import { ForecustComponent } from './home/forecust/forecust.component';
 import { TemperatureToggleComponent } from './components/temperature-toggle/temperature-toggle.component';
 import { TempereturePipe } from './pipe/temperaturePipe';
+import { ThemeChangerComponent } from './theme-changer/theme-changer.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TempereturePipe } from './pipe/temperaturePipe';
     TempereturePipe,
     CurrentWeatherComponent,
     ForecustComponent,
-    TemperatureToggleComponent
+    TemperatureToggleComponent,
+    ThemeChangerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
